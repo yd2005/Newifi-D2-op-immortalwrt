@@ -28,7 +28,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # 升级到 v4
 
     - name: Initialization environment
       env:
@@ -99,14 +99,14 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware directory
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4  # 修复报错：升级到 v4
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware to Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2  # 建议升级到 v2
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         tag_name: Newifi3_NoWiFi_${{ env.FILE_DATE }}
