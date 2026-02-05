@@ -13,7 +13,6 @@ env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  # 指向专门的配置文件
   CONFIG_FILE: configs/newifi3_nowifi.config
   DIY_P1_SH: scripts/diy-part1-newifi3.sh
   DIY_P2_SH: scripts/diy-part2-newifi3.sh
@@ -28,7 +27,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4  # 升级到 v4
+      uses: actions/checkout@v4
 
     - name: Initialization environment
       env:
@@ -99,14 +98,14 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware directory
-      uses: actions/upload-artifact@v4  # 修复报错：升级到 v4
+      uses: actions/upload-artifact@v4
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware to Release
-      uses: softprops/action-gh-release@v2  # 建议升级到 v2
+      uses: softprops/action-gh-release@v2
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         tag_name: Newifi3_NoWiFi_${{ env.FILE_DATE }}
